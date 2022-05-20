@@ -3,8 +3,8 @@ struct rtcdate;
 
 // system calls
 int fork(void);
-int exit(void) __attribute__((noreturn));
-int wait(void);
+int exit(int status) __attribute__((noreturn)); //Change the exit system call signature
+int wait(int *status); //Update the wait system call signature
 int pipe(int*);
 int write(int, const void*, int);
 int read(int, void*, int);
@@ -23,6 +23,12 @@ int getpid(void);
 char* sbrk(int);
 int sleep(int);
 int uptime(void);
+int hello(void); //J.H.
+int waitpid(int pid, int *status, int options); //Add a waitpid system call
+void set_prior(int prior_lvl);
+int updating_prior_val(int pid, int prior_val);
+
+int status;
 
 // ulib.c
 int stat(const char*, struct stat*);

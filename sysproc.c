@@ -16,14 +16,18 @@ sys_fork(void)
 int
 sys_exit(void)
 {
-  exit();
+  int status;
+  argint(0, &status); //check this later
+  exit(status);
   return 0;  // not reached
 }
 
 int
 sys_wait(void)
 {
-  return wait();
+  int *status;
+  argptr(0,(char **) &status, sizeof(int*));
+  return wait(status);
 }
 
 int
@@ -88,4 +92,38 @@ sys_uptime(void)
   xticks = ticks;
   release(&tickslock);
   return xticks;
+}
+
+int
+sys_hello(void){
+  hello();
+  return 0;
+}
+/*
+int
+sys_waitpid() {
+  argint(0, &pid);
+  argptr(0,(char **) &status, sizeof(int*));
+  argint(0, &options);
+  return 0;
+}
+*/
+
+void
+sys_set_prior(void)
+{
+  int prior_val = 10;
+  return set_prior(prior_val);
+}
+
+int
+sys_updating_prior_val(void){
+  int pid, prior_val;
+  if (argint(0,&pid) < 0){
+    return -1;
+  }
+  if (argint(1,&prior_val) < 0){
+    return -1;
+  }
+  return updating_prior_val(pid, prior_val);
 }

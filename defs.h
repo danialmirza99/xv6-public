@@ -104,7 +104,7 @@ int             pipewrite(struct pipe*, char*, int);
 //PAGEBREAK: 16
 // proc.c
 int             cpuid(void);
-void            exit(void);
+void            exit(int status);   //Change the exit system call signature
 int             fork(void);
 int             growproc(int);
 int             kill(int);
@@ -117,9 +117,13 @@ void            sched(void);
 void            setproc(struct proc*);
 void            sleep(void*, struct spinlock*);
 void            userinit(void);
-int             wait(void);
+int             wait(int *status); //Update the wait system call signature
 void            wakeup(void*);
 void            yield(void);
+void            hello(void); //J.H.
+int             waitpid(int pid, int *status, int options); //Add a waitpid system call
+void            set_prior(int prior_val);
+int             updating_prior_val(int pid, int prior_val);
 
 // swtch.S
 void            swtch(struct context**, struct context*);
